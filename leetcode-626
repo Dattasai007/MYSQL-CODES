@@ -1,0 +1,5 @@
+with cte as(select id, student, lag(student) over(order by id) as prev, lead(student) over(order by id) as nxt
+from seat)
+select id, coalesce((case when id%2<>0 then nxt else prev end), student) as student
+from cte
+order by id
